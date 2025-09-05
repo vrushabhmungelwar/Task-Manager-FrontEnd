@@ -1,7 +1,12 @@
 import axios from "axios";
 
+const API_BASE =
+  import.meta.env.MODE === "development"
+    ? "" // lets dev proxy handle /api
+    : import.meta.env.VITE_API_URL;
+
 const api = axios.create({
-  baseURL: "/api",
+  baseURL: API_BASE,
 });
 
 api.interceptors.request.use((config) => {
@@ -11,3 +16,11 @@ api.interceptors.request.use((config) => {
 });
 
 export default api;
+
+// const API_BASE = import.meta.env.VITE_API_URL || '';
+
+// export async function fetchTasks() {
+//   const res = await fetch(`${API_BASE}/api/tasks`); // your backend route
+//   if (!res.ok) throw new Error('Failed to load tasks');
+//   return res.json();
+// }
